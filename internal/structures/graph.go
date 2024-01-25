@@ -7,57 +7,46 @@ import (
 // Directed graph will be represented by an adjacency list
 type Graph struct {
     Vertices []*Vertex
+    Edges []*Edge
 }
 
-// Vertex will be represented by a string ID and a list of adjacent vertices, that is, edges directed from this vertex to other vertices
+// Vertex will be represented by an int ID.
 type Vertex struct {
     ID int
-    Adjacent []*Vertex
 }
 
-// AddEdge adds an edge to the graph, that is, adds a given vertex to the adjacency list of another vertex
-func (g *Graph) AddEdge(v1, v2 int) {
-    vertex1 := g.GetVertex(v1)
-    vertex2 := g.GetVertex(v2)
-    vertex1.Adjacent = append(vertex1.Adjacent, vertex2)
+// Edge will be a hash table with a key of two vertices and a value of the capacity of the edge
+type Edge struct {
+    Vertices [2]*Vertex
+    Capacity int
 }
 
-// AddVertex adds a vertex to the graph
-func (g *Graph) AddVertex(v *Vertex) {
-    g.Vertices = append(g.Vertices, v)
-}
-
-// GetVertex returns a vertex with a given ID
-func (g *Graph) GetVertex(id int) *Vertex {
-    for _, v := range g.Vertices {
-        if v.ID == id {
-            return v
-        }
-    }
-    return nil
-}
-
-// GetVertices returns all connected vertices to a given vertex
-func (g *Graph) GetVertices(v *Vertex) []*Vertex {
-    return v.Adjacent
-}
-
-// Print prints the graph
-func (g *Graph) Print() {
-    for _, v := range g.Vertices {
-        fmt.Printf("%d: ", v.ID)
-        for _, v2 := range v.Adjacent {
-            fmt.Printf("%d ", v2.ID)
-        }
-        fmt.Printf("\n")
-    }
-}
-
-// Constructor for a graph. Given an integer n, it creates a graph with n vertices, with no connections between them
-func NewGraph(n int) *Graph {
+// The graph will be initialized with a list of vertices. This will just mean that the graph contains n vertices, but no edges yet
+func NewGraph(n int) *Graph{
     var g Graph
     for i := 0; i < n; i++ {
-        g.AddVertex(&Vertex{ID: i})
+        g.Vertices = append(g.Vertices, &Vertex{ID: i})
     }
     return &g
+}
+
+// Add an edge to the graph. The arguments will be v1 int, v2 int, and capacity int
+func (g *Graph) AddEdge(v1 int, v2 int, capacity int) {
+    var e Edge
+    e.Vertices[0] = g.Vertices[v1]
+    e.Vertices[1] = g.Vertices[v2]
+    e.Capacity = capacity
+    g.Edges = append(g.Edges, &e)
+}
+
+// Print the graph
+func (g *Graph) Print() {
+    fmt.Println("Vertices:")
+    for _, v := range g.Vertices {
+        fmt.Println(v.ID)
+    }
+    fmt.Println("Edges:")
+    for _, e := range g.Edges {
+        fmt.Println("Edge from", e.Vertices[0].ID, "to", e.Vertices[1].ID, "with capacity", e.Capacity)
+    }
 }
