@@ -11,18 +11,15 @@ type Graph struct {
 
 // Vertex will be represented by a string ID and a list of adjacent vertices, that is, edges directed from this vertex to other vertices
 type Vertex struct {
-    ID string
+    ID int
     Adjacent []*Vertex
 }
 
 // AddEdge adds an edge to the graph, that is, adds a given vertex to the adjacency list of another vertex
-func (g *Graph) AddEdge(v1, v2 *Vertex) {
-    v1.Adjacent = append(v1.Adjacent, v2)
-}
-
-// if addEdge is called with integers, it will find the vertices with the given IDs and call the function above
-func (g *Graph) AddEdgeInt(v1, v2 int) {
-    g.AddEdge(g.GetVertex(fmt.Sprintf("%d", v1)), g.GetVertex(fmt.Sprintf("%d", v2)))
+func (g *Graph) AddEdge(v1, v2 int) {
+    vertex1 := g.GetVertex(v1)
+    vertex2 := g.GetVertex(v2)
+    vertex1.Adjacent = append(vertex1.Adjacent, vertex2)
 }
 
 // AddVertex adds a vertex to the graph
@@ -31,7 +28,7 @@ func (g *Graph) AddVertex(v *Vertex) {
 }
 
 // GetVertex returns a vertex with a given ID
-func (g *Graph) GetVertex(id string) *Vertex {
+func (g *Graph) GetVertex(id int) *Vertex {
     for _, v := range g.Vertices {
         if v.ID == id {
             return v
@@ -48,11 +45,11 @@ func (g *Graph) GetVertices(v *Vertex) []*Vertex {
 // Print prints the graph
 func (g *Graph) Print() {
     for _, v := range g.Vertices {
-        fmt.Printf("%s -> ", v.ID)
-        for _, v := range v.Adjacent {
-            fmt.Printf("%s ", v.ID)
+        fmt.Printf("%d: ", v.ID)
+        for _, v2 := range v.Adjacent {
+            fmt.Printf("%d ", v2.ID)
         }
-        fmt.Println()
+        fmt.Printf("\n")
     }
 }
 
@@ -60,9 +57,7 @@ func (g *Graph) Print() {
 func NewGraph(n int) *Graph {
     var g Graph
     for i := 0; i < n; i++ {
-        var v Vertex
-        v.ID = fmt.Sprintf("%d", i)
-        g.AddVertex(&v)
+        g.AddVertex(&Vertex{ID: i})
     }
     return &g
 }
