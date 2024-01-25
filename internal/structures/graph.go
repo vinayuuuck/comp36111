@@ -15,10 +15,11 @@ type Vertex struct {
     ID int
 }
 
-// Edge will be a hash table with a key of two vertices and a value of the capacity of the edge
+// Edge will be a hash table with a key of two vertices and a value of the capacity of the edge, and flow through the edge which will be initialized to 0 by default
 type Edge struct {
     Vertices [2]*Vertex
     Capacity int
+    Flow int
 }
 
 // The graph will be initialized with a list of vertices. This will just mean that the graph contains n vertices, but no edges yet

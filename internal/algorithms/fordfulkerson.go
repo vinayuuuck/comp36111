@@ -5,8 +5,6 @@ import (
     "internal/structures"
 )
 
-// Take a graph as input and call the print function
-func FordFulkerson(graph *structures.Graph) {
-    fmt.Println("Ford Fulkerson")
-    graph.Print()
+func FlowMax(graph *structures.Graph) {
+    fmt.Println("Flow Max")
 }
