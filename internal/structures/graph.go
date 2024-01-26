@@ -15,9 +15,9 @@ type Vertex struct {
     ID int
 }
 
-// Edge will be a hash table with a key of two vertices and a value of the capacity of the edge, and flow through the edge which will be initialized to 0 by default
 type Edge struct {
-    Vertices [2]*Vertex
+    From *Vertex
+    To *Vertex
     Capacity int
     Flow int
 }
@@ -34,8 +34,8 @@ func NewGraph(n int) *Graph{
 // Add an edge to the graph. The arguments will be v1 int, v2 int, and capacity int
 func (g *Graph) AddEdge(v1 int, v2 int, capacity int) {
     var e Edge
-    e.Vertices[0] = g.Vertices[v1]
-    e.Vertices[1] = g.Vertices[v2]
+    e.From = g.Vertices[v1]
+    e.To = g.Vertices[v2]
     e.Capacity = capacity
     g.Edges = append(g.Edges, &e)
 }
@@ -48,6 +48,11 @@ func (g *Graph) Print() {
     }
     fmt.Println("Edges:")
     for _, e := range g.Edges {
-        fmt.Println("Edge from", e.Vertices[0].ID, "to", e.Vertices[1].ID, "with capacity", e.Capacity)
+        fmt.Println("Edge from", e.From.ID, "to", e.To.ID, "with capacity", e.Capacity)
     }
+}
+
+func (g *Graph) FindPath(u int, v int) {
+    // Find a path from u to v vertices
+    
 }

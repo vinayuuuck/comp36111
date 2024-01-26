@@ -1,10 +1,13 @@
 package algorithms
 
 import (
-    "fmt"
+    //"fmt"
     "internal/structures"
 )
 
-func FlowMax(graph *structures.Graph) {
-    fmt.Println("Flow Max")
+// Function takes a graph as input and returns the optimal flow in the form of a map of edges to their flow
+func FlowMax(g *structures.Graph) map[structures.Edge]int {
+    // Initialize the flow map
+    flow := make(map[structures.Edge]int)
+    return flow
 }
